@@ -1,0 +1,15 @@
+{
+    "application": {
+        "name": "Blog"
+    },
+    "express": {
+        "port": "comes-from-webfaction"
+    },
+    "logger": {
+        "filename": "logs/run.log",
+        "level": "silly"
+    },
+    "mongo": {
+        "url": "mongodb://username:password@localhost:port-from-webfaction/Blog"
+    }
+}

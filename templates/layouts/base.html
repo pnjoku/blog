@@ -1,0 +1,62 @@
+<doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        {% block css %}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/sandstone/bootstrap.min.css">
+
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        {% endblock %}
+            <div>
+                <nav id="nav"class="navbar navbar-default navbar-fixed-top">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/">Prince</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class=""><a href="/about">About <span class="sr-only">(current)</span></a></li>
+                        </ul>
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Go</button>
+                    </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">Home</a></li>
+                </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        {% block js %}
+            <script src="//code.jquery.com/jquery-1.11.0.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        {% endblock %}
+    </body>
+        <footer class="footer">
+        <div class="container">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+                <a href="https://www.facebook.com/prince.njoku.581" class="fa fa-facebook-square fa-fw fa-3x"></a>
+                <a href="https://twitter.com/princenjoku55" class="fa fa-twitter fa-fw fa-3x" ></a>
+                <a href="https://plus.google.com/u/0/110094753727420870095/posts" class="fa fa-google-plus-square fa-fw fa-3x"></a>
+                <a href="https://www.linkedin.com/pub/prince-njoku/55/750/72" class="fa fa-linkedin-square fa-fw fa-3x" ></a>
+                <p class="text-muted">Copyright © princenjoku.com 2015</p>
+            </div>
+        </div>
+    </footer>
+</html>
