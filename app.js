@@ -4,7 +4,13 @@ var bodyParser = require('body-parser');
 var nconf = require('nconf');
 var path = require('path');
 var app = express();
+var fs = require('fs');
 var nunjucks = require('nunjucks');
+
+ //fs.readdir(path.join(__dirname, 'models'),function (err, file){
+    //if(err) console.log(err);
+      //var Blog = require(path.join(__dirname, 'models'));
+    //});
 
 nunjucks.configure('templates', {
   autoescape: true,
@@ -13,6 +19,8 @@ nunjucks.configure('templates', {
 
 var mongoose = require('mongoose');
 
+mongoose.connect('mongodb://localhost/test');
+
 // only serve static files in development mode
 if (config.environment !== 'production'){
     app.use(express.static(path.join(__dirname, 'static_assets')));
@@ -20,6 +28,15 @@ if (config.environment !== 'production'){
 
 app.use(bodyParser.urlencoded({extended:true}));
 
+mongoose.model('Blog', {title: String});
+
+app.get('/posts', function(req, res)
+{
+  mongoose.model('Blog').find(function(err, blogs){
+    if(err) console.log(err);
+    res.send(blogs);
+  })
+})
 
 app.get('/heartbeat', function(req, res){
     res.status(200).json({
