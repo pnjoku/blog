@@ -2,33 +2,28 @@ var config = require('./lib/configuration');
 var express = require('express');
 var bodyParser = require('body-parser');
 var nconf = require('nconf');
+var db = require('./db');
 var path = require('path');
 var app = express();
 var fs = require('fs');
 var nunjucks = require('nunjucks');
 
- //fs.readdir(path.join(__dirname, 'models'),function (err, file){
-    //if(err) console.log(err);
-      //var Blog = require(path.join(__dirname, 'models'));
-    //});
+var heartbeat = require('./routes/heartbeat'),
+    heartbeatRouter = express.Router(),
+    blog = require('./routes/blog'),
+    blogRouter = express.Router();
 
 nunjucks.configure('templates', {
   autoescape: true,
   express: app
 });
 
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/test');
-
 // only serve static files in development mode
-if (config.environment !== 'production'){
+if (config.environment !== 'production') {
     app.use(express.static(path.join(__dirname, 'static_assets')));
 }
 
 app.use(bodyParser.urlencoded({extended:true}));
-
-mongoose.model('Blog', {title: String});
 
 app.get('/posts', function(req, res)
 {
@@ -38,33 +33,14 @@ app.get('/posts', function(req, res)
   })
 })
 
-app.get('/heartbeat', function(req, res){
-    res.status(200).json({
-        status: "alive"
-    });
-});
+heartbeatRouter.get('/heartbeat', heartbeat.index);
+app.use('/', heartbeatRouter);
 
-app.get('/', function(req, res) {
-  res.render('layouts/index.html');
-});
-
-app.get('/email', function(req, res) {
-  res.render('layouts/email.html');
-});
-
- app.post('/email', function(req, res) {
-    res.render('layouts/diddybop.html', {email : req.body.email});
-  });
-
- app.get('/about', function(req, res) {
-  res.render('layouts/about.html');
-});
-
-
-
-
-
-
+blogRouter.get('/email', blog.getEmail);
+blogRouter.post('/email', blog.sendEmail);
+blogRouter.get('/about', blog.about);
+blogRouter.get('/', blog.index);
+app.use('/', blogRouter);
 
 var server = app.listen(config.get('express:port'), function() {
   console.log('%s starting up on port %s using the %s environment', config.get('application:name'), config.get('express:port'), config.environment);
